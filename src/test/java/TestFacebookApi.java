@@ -13,8 +13,6 @@ import static org.hamcrest.Matchers.*;
 
 public class TestFacebookApi {
 
-    //private static final String URL = "https://reqres.in";
-
     protected static void setupRestAssured() {
         RestAssured.baseURI = "https://reqres.in";
     }
@@ -24,7 +22,7 @@ public class TestFacebookApi {
         setupRestAssured();
     }
 
-    @Test(description = "Get user")
+    @Test(description = "Get user", priority = 2)
     public void getUser(){
         given().
                 contentType(ContentType.JSON).
@@ -32,7 +30,7 @@ public class TestFacebookApi {
                 .then().statusCode(200);
     }
 
-    @Test(description = "Post user")
+    @Test(description = "Post user", priority = 1)
     public void postUser(){
         Map<String,String> user = new HashMap<>();
         user.put("name", "morpheus" );
@@ -45,7 +43,7 @@ public class TestFacebookApi {
                 .then().statusCode(201);
     }
 
-    @Test(description = "Change user")
+    @Test(description = "Change user", priority = 3)
     public void changeUser(){
         Map<String,String> user = new HashMap<>();
         user.put("name", "morpheus" );
@@ -56,18 +54,14 @@ public class TestFacebookApi {
                 .body(user)
                 .when().put("/api/users")
                 .then().statusCode(200);
-
     }
 
-    @Test(description = "Delete user")
+    @Test(description = "Delete user", priority = 4)
     public void deleteUser(){
         given()
                 .when()
                 .delete("/api/users/2")
                 .then()
                 .statusCode(204);
-
     }
-
-
 }
